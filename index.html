@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Cartas e Envelopes Oficiais - CAMG</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Ficheiro de Estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Mesh Gradient Background Orbs -->
+    <div class="orb-container">
+        <div class="glowing-orb orb-primary"></div>
+        <div class="glowing-orb orb-accent"></div>
+        <div class="glowing-orb orb-tertiary"></div>
+    </div>
+
+    <!-- App Container (Triple Panel Layout) -->
+    <div class="app-container">
+        
+        <!-- SIDEBAR 1: BUILDER PANEL (Left) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-area">
+                    <div class="logo-wrapper">
+                        <img src="logo.png" alt="CAMG Logo" class="app-logo-img" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
+                        <div id="fallback-logo" class="fallback-logo-circle" style="display:none;">
+                            <span>CAMG</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h1>CAMG</h1>
+                        <p class="tagline">Gerador de Documentos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation for Form -->
+            <nav class="sidebar-nav">
+                <button class="nav-tab active" data-tab="tab-documento">
+                    <span class="icon">📄</span> Documento
+                </button>
+                <button class="nav-tab" data-tab="tab-conteudo">
+                    <span class="icon">✏️</span> Conteúdo
+                </button>
+                <button class="nav-tab" data-tab="tab-design">
+                    <span class="icon">🎨</span> Design & Contactos
+                </button>
+            </nav>
+
+            <!-- Form Content -->
+            <div class="sidebar-content">
+                
+                <!-- TAB 1: DOCUMENTO -->
+                <div class="tab-pane active" id="tab-documento">
+                    <div class="form-section">
+                        <h3>Tipo de Documento</h3>
+                        <div class="document-type-grid">
+                            <label class="doc-type-card active">
+                                <input type="radio" name="doc-type" value="letter" checked>
+                                <div class="card-glow"></div>
+                                <span class="card-icon">📄</span>
+                                <span class="card-title">Carta A4</span>
+                                <span class="card-desc">Papel Timbrado</span>
+                            </label>
+                            <label class="doc-type-card">
+                                <input type="radio" name="doc-type" value="notepad-a5">
+                                <div class="card-glow"></div>
+                                <span class="card-icon">🗒️</span>
+                                <span class="card-title">Bloco A5</span>
+                                <span class="card-desc">148 x 210 mm</span>
+                            </label>
+                            <label class="doc-type-card">
+                                <input type="radio" name="doc-type" value="envelope-dl">
+                                <div class="card-glow"></div>
+                                <span class="card-icon">✉️</span>
+                                <span class="card-title">Envelope DL</span>
+                                <span class="card-desc">220 x 110 mm</span>
+                            </label>
+                            <label class="doc-type-card">
+                                <input type="radio" name="doc-type" value="envelope-c5">
+                                <div class="card-glow"></div>
+                                <span class="card-icon">📬</span>
+                                <span class="card-title">Envelope C5</span>
+                                <span class="card-desc">229 x 162 mm</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section envelope-only" style="display: none;">
+                        <h3>Opções do Envelope</h3>
+                        <div class="form-group row-align">
+                            <label for="env-window">Incluir Janela Transparente</label>
+                            <label class="switch">
+                                <input type="checkbox" id="env-window">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group row-align">
+                            <label for="env-sender">Mostrar Remetente (Canto Sup. Esquerdo)</label>
+                            <label class="switch">
+                                <input type="checkbox" id="env-sender" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section letter-only">
+                        <h3>Identificação do Ofício</h3>
+                        <div class="form-group">
+                            <label for="doc-ref">Referência / Nº de Saída</label>
+                            <input type="text" id="doc-ref" placeholder="Ex: Ofício Nº CAMG-2026/012">
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="doc-date">Data do Documento</label>
+                                <input type="date" id="doc-date">
+                            </div>
+                            <div class="form-group" style="align-self: flex-end;">
+                                <button type="button" class="btn btn-secondary" id="btn-today">Hoje</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Destinatário</h3>
+                        <div class="form-group">
+                            <label for="dest-name">Nome / Entidade</label>
+                            <input type="text" id="dest-name" placeholder="Ex: Exmo. Senhor Presidente da Câmara Municipal">
+                        </div>
+                        <div class="form-group">
+                            <label for="dest-address">Morada</label>
+                            <input type="text" id="dest-address" placeholder="Ex: Praça do Município, Nº 1">
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group flex-2">
+                                <label for="dest-zip">Código Postal</label>
+                                <input type="text" id="dest-zip" placeholder="Ex: 2430-211">
+                            </div>
+                            <div class="form-group flex-3">
+                                <label for="dest-city">Localidade</label>
+                                <input type="text" id="dest-city" placeholder="Ex: Marinha Grande">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: CONTEÚDO -->
+                <div class="tab-pane" id="tab-conteudo">
+                    <div class="form-section letter-only">
+                        <h3>Corpo da Carta</h3>
+                        <div class="form-group">
+                            <label for="doc-subject">Assunto</label>
+                            <input type="text" id="doc-subject" class="bold-input" placeholder="Ex: Pedido de Apoio Logístico para a Milha de Cristal">
+                        </div>
+                        <div class="form-group">
+                            <label for="doc-salutation">Saudação Inicial</label>
+                            <input type="text" id="doc-salutation" placeholder="Ex: Exmo.(a) Senhor(a),">
+                        </div>
+                        <div class="form-group">
+                            <div class="label-with-hint">
+                                <label for="doc-body">Texto Principal</label>
+                                <span class="hint">Use quebras de linha para criar novos parágrafos.</span>
+                            </div>
+                            <textarea id="doc-body" rows="12" placeholder="Escreva aqui a sua mensagem..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="doc-valediction">Fórmula de Despedida</label>
+                            <input type="text" id="doc-valediction" placeholder="Ex: Com os nossos melhores cumprimentos,">
+                        </div>
+                    </div>
+
+                    <div class="form-section envelope-only" style="display: none;">
+                        <div class="info-alert">
+                            <span class="info-icon">ℹ️</span>
+                            <p>Os dados do destinatário do envelope são sincronizados automaticamente com os da primeira aba.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-section notepad-only" style="display: none;">
+                        <h3>Opções do Bloco de Notas</h3>
+                        <div class="form-group">
+                            <label for="notepad-title">Título do Bloco</label>
+                            <input type="text" id="notepad-title" value="Anotações" placeholder="Ex: Anotações, Notas, Memorando">
+                        </div>
+                        <div class="form-group">
+                            <label for="notepad-footer-left">Texto do Rodapé (Esquerda)</label>
+                            <input type="text" id="notepad-footer-left" value="imprima, personalize, impressione" placeholder="Texto curto à esquerda">
+                        </div>
+                        <div class="form-group">
+                            <label for="notepad-footer-right">Texto do Rodapé (Direita)</label>
+                            <input type="text" id="notepad-footer-right" value="imprima, personalize, impressione" placeholder="Texto curto à direita">
+                        </div>
+                        <div class="form-group">
+                            <label for="notepad-pattern">Padrão das Páginas</label>
+                            <select id="notepad-pattern">
+                                <option value="ruled" selected>Linhas Horizontais (Pautado)</option>
+                                <option value="grid">Quadriculado (Grid)</option>
+                                <option value="dotted">Pontilhado (Dotted)</option>
+                                <option value="blank">Liso (Branco)</option>
+                            </select>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="notepad-spacing">Espaçamento</label>
+                                <select id="notepad-spacing">
+                                    <option value="6mm">Estreito (6mm)</option>
+                                    <option value="8mm" selected>Médio (8mm)</option>
+                                    <option value="10mm">Largo (10mm)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notepad-line-color">Opacidade das Linhas</label>
+                                <select id="notepad-line-color">
+                                    <option value="0.08">Muito Suave (8%)</option>
+                                    <option value="0.15" selected>Suave (15%)</option>
+                                    <option value="0.25">Visível (25%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row-align">
+                            <label for="notepad-show-date">Incluir Campo de Data no Topo</label>
+                            <label class="switch">
+                                <input type="checkbox" id="notepad-show-date" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group row-align">
+                            <label for="notepad-show-margin">Margem Lateral Guia (Margem Vermelha)</label>
+                            <label class="switch">
+                                <input type="checkbox" id="notepad-show-margin">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: DESIGN & CONTACTOS -->
+                <div class="tab-pane" id="tab-design">
+                    <div class="form-section">
+                        <h3>Estilo do Papel Timbrado</h3>
+                        <div class="style-selector-grid">
+                            <label class="style-card active">
+                                <input type="radio" name="stationery-style" value="docex" checked>
+                                <span class="style-icon">💎</span>
+                                <span class="style-name">Oficial docex</span>
+                            </label>
+                            <label class="style-card">
+                                <input type="radio" name="stationery-style" value="modern">
+                                <span class="style-icon">🚀</span>
+                                <span class="style-name">Moderna Vanguarda</span>
+                            </label>
+                            <label class="style-card">
+                                <input type="radio" name="stationery-style" value="docex1">
+                                <span class="style-icon">🗒️</span>
+                                <span class="style-name">Anotações docex1</span>
+                            </label>
+                            <label class="style-card">
+                                <input type="radio" name="stationery-style" value="ceremonial">
+                                <span class="style-icon">⚜️</span>
+                                <span class="style-name">Cerimonial de Luxo</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Ajustes Avançados (Tipografia & Margens)</h3>
+                        <div class="form-group">
+                            <label for="setting-font">Fonte da Carta</label>
+                            <select id="setting-font">
+                                <option value="var(--font-letter-sans)">Outfit Geometric (Moderna)</option>
+                                <option value="'Plus Jakarta Sans', sans-serif">Jakarta Sans (Limpa)</option>
+                                <option value="var(--font-letter-serif)">Lora Serif (Clássica)</option>
+                                <option value="system-ui, sans-serif">Sistema Padrão</option>
+                            </select>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="setting-fontsize">Tamanho Letra</label>
+                                <select id="setting-fontsize">
+                                    <option value="13.5px">13.5px (Compacta)</option>
+                                    <option value="14.5px" selected>14.5px (Padrão)</option>
+                                    <option value="15.5px">15.5px (Legível)</option>
+                                    <option value="16.5px">16.5px (Grande)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="setting-lineheight">Espaçamento</label>
+                                <select id="setting-lineheight">
+                                    <option value="1.5">1.5 (Apertado)</option>
+                                    <option value="1.65" selected>1.65 (Equilibrado)</option>
+                                    <option value="1.8">1.8 (Largo)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Modelos Rápidos (Presets)</h3>
+                        <div class="preset-list">
+                            <button type="button" class="btn-preset" data-preset="patrocinio">
+                                <span class="preset-icon">🤝</span>
+                                <span class="preset-text">Pedido de Patrocínio / Apoio</span>
+                            </button>
+                            <button type="button" class="btn-preset" data-preset="convocatoria">
+                                <span class="preset-icon">📅</span>
+                                <span class="preset-text">Convocatória de Assembleia Geral</span>
+                            </button>
+                            <button type="button" class="btn-preset" data-preset="milha">
+                                <span class="preset-icon">💎</span>
+                                <span class="preset-text">Convite: Milha de Cristal</span>
+                            </button>
+                            <button type="button" class="btn-preset" data-preset="declaracao">
+                                <span class="preset-icon">🏃</span>
+                                <span class="preset-text">Declaração de Filiação de Atleta</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Identidade & Cores</h3>
+                        <div class="theme-grid">
+                            <button type="button" class="theme-card active" data-theme="theme-verde-ouro">
+                                <span class="theme-swatch sw-verde-ouro"></span>
+                                <span class="theme-name">Verde & Ouro Marinha</span>
+                            </button>
+                            <button type="button" class="theme-card" data-theme="theme-azul">
+                                <span class="theme-swatch sw-azul"></span>
+                                <span class="theme-name">Azul Atlético</span>
+                            </button>
+                            <button type="button" class="theme-card" data-theme="theme-preto-ouro">
+                                <span class="theme-swatch sw-preto-ouro"></span>
+                                <span class="theme-name">Preto & Ouro Premium</span>
+                            </button>
+                            <button type="button" class="theme-card" data-theme="theme-minimalista">
+                                <span class="theme-swatch sw-minimalista"></span>
+                                <span class="theme-name">Mínimo Clássico</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-section letter-only">
+                        <h3>Opções de Visualização</h3>
+                        <div class="form-group row-align">
+                            <label for="show-logo">Exibir Logótipo</label>
+                            <label class="switch">
+                                <input type="checkbox" id="show-logo" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group row-align">
+                            <label for="show-fold-marks">Mostrar Marcas de Dobragem</label>
+                            <label class="switch">
+                                <input type="checkbox" id="show-fold-marks">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Contactos Oficiais do Clube</h3>
+                        <div class="form-group">
+                            <label for="foot-address">Morada da Sede</label>
+                            <input type="text" id="foot-address" value="Estádio Municipal da Marinha Grande (Av. Dr. José Henriques Vareda 118, 2430-307 Marinha Grande)">
+                        </div>
+                        <div class="form-group">
+                            <label for="foot-phone">Telefone</label>
+                            <input type="text" id="foot-phone" value="+351 928 119 160">
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="foot-email">Correio Eletrónico</label>
+                                <input type="text" id="foot-email" value="catletismomg@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="foot-web">Website</label>
+                                <input type="text" id="foot-web" value="www.catletismomg.pt">
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="foot-insta">Instagram</label>
+                                <input type="text" id="foot-insta" value="@camg_atletismo">
+                            </div>
+                            <div class="form-group">
+                                <label for="foot-socials">Facebook & YouTube</label>
+                                <input type="text" id="foot-socials" value="@catletismomg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar Actions -->
+            <div class="sidebar-footer">
+                <button type="button" class="btn btn-primary btn-block" id="btn-print">
+                    <span class="icon">🖨️</span> Imprimir / Guardar PDF
+                </button>
+                <button type="button" class="btn btn-primary btn-block" id="btn-download-jpg" style="margin-top: 10px; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid rgba(255,255,255,0.08);">
+                    <span class="icon">🖼️</span> Descarregar Imagem JPG
+                </button>
+                <div class="dual-buttons">
+                    <button type="button" class="btn btn-secondary" id="btn-clear" title="Limpar todos os campos">
+                        Limpar
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="btn-reset-defaults" title="Repor valores de origem">
+                        Repor Original
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN PREVIEWER PANEL (Center) -->
+        <main class="previewer">
+            <div class="previewer-header">
+                <div class="preview-title-block">
+                    <h2>Visualizador Profissional</h2>
+                    <span class="badge-live">LIVE</span>
+                </div>
+                
+                <!-- Floating Control Bar -->
+                <div class="floating-control-bar">
+                    <button type="button" class="btn-zoom" id="btn-zoom-out" title="Reduzir Zoom">−</button>
+                    <span class="zoom-level" id="zoom-text">85%</span>
+                    <button type="button" class="btn-zoom" id="btn-zoom-in" title="Aumentar Zoom">+</button>
+                </div>
+            </div>
+
+            <div class="preview-area" id="preview-area">
+                
+                <!-- A4 LETTER PREVIEW -->
+                <div class="preview-container paper-letter active" id="letter-page">
+                    <!-- Fold marks -->
+                    <div class="fold-mark fold-mark-1"></div>
+                    <div class="fold-mark fold-mark-2"></div>
+                    
+                    <!-- page-a4 can have classes: theme-*, style-docex, style-sport, style-ceremonial, style-minimal -->
+                    <div class="page-a4 theme-verde-ouro style-docex" id="a4-sheet">
+                        
+                        <!-- Premium Guilloché/Line Pattern Layer (Only on screen for maximum premium feel) -->
+                        <div class="page-textured-background"></div>
+
+                        <!-- Modern Vanguardist Vertical Accent Line -->
+                        <div class="modern-vertical-accent"></div>
+                        
+                        <!-- Modern Glow Bar and Tech/Geometric Side Decor -->
+                        <div class="modern-header-glow-bar"></div>
+                        <div class="modern-sidebar-decor"></div>
+                        
+                        <!-- Double Border Decoration for Ceremonial / Classic Mode -->
+                        <div class="page-double-border"></div>
+
+                        <!-- Athletic Corner Shapes for Sport Mode -->
+                        <div class="sport-decor-corner top-left"></div>
+                        <div class="sport-decor-corner bottom-right"></div>
+
+                        <!-- DocEx Style Track SVG (Visible only in style-docex) -->
+                        <div class="docex-track-container">
+                            <svg viewBox="0 0 210 297" class="docex-track-svg">
+                                <!-- Path 1 (Outer Black) -->
+                                <path d="M 180,297 L 180,110 A 30,30 0 0,1 210,80" fill="none" stroke="#000000" stroke-width="1.2"/>
+                                <!-- Path 2 (Outer Yellow) -->
+                                <path d="M 184,297 L 184,110 A 26,26 0 0,1 210,84" fill="none" stroke="#ffd400" stroke-width="1.5"/>
+                                <!-- Path 3 (Inner Yellow) -->
+                                <path d="M 188,297 L 188,110 A 22,22 0 0,1 210,88" fill="none" stroke="#ffd400" stroke-width="1.5"/>
+                                <!-- Path 4 (Inner Black) -->
+                                <path d="M 192,297 L 192,110 A 18,18 0 0,1 210,92" fill="none" stroke="#000000" stroke-width="1.2"/>
+                            </svg>
+                        </div>
+
+                        <!-- Concentric athletic track rings watermark (Opacity 0.02) -->
+                        <div class="page-watermark">
+                            <svg viewBox="0 0 500 500" class="track-watermark-svg">
+                                <circle cx="250" cy="250" r="230" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="8,6"/>
+                                <circle cx="250" cy="250" r="190" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="250" cy="250" r="150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="250" cy="250" r="110" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4,4"/>
+                            </svg>
+                            <img src="logo.png" alt="" class="watermark-logo-img" onerror="this.style.display='none';">
+                        </div>
+
+                        <!-- Docex1 style elements (Visible only in style-docex1) -->
+                        <div class="docex1-header-decor">
+                            <div class="header-top-row">
+                                <div class="docex1-chevron-logo">
+                                    <svg viewBox="0 0 100 100" class="docex1-svg-logo">
+                                        <path d="M 20,20 L 45,50 L 20,80 L 35,80 L 60,50 L 35,20 Z" fill="var(--theme-primary)" />
+                                        <path d="M 45,20 L 70,50 L 45,80 L 60,80 L 85,50 L 60,20 Z" fill="var(--theme-accent)" />
+                                    </svg>
+                                </div>
+                                <div class="docex1-title">Ofício Oficial</div>
+                            </div>
+                            <div class="docex1-horizontal-line"></div>
+                        </div>
+
+                        <!-- Cabeçalho Asymmetric Premium com Painéis Estruturados -->
+                        <header class="document-header">
+                            <div class="header-top-decoration"></div>
+                            
+                            <!-- Complex Header Grid Layout -->
+                            <div class="header-main-grid">
+                                <div class="header-left">
+                                    <div class="club-logo-container" id="logo-holder">
+                                        <div class="logo-gold-ring"></div>
+                                        <img src="logo.png" alt="CAMG" class="club-official-logo-img" onerror="this.src='https://placehold.co/150x150/0f4c3a/ffffff?text=CAMG';">
+                                    </div>
+                                </div>
+                                <div class="header-right">
+                                    <h2 class="club-name">CLUBE ATLETISMO DE MARINHA GRANDE</h2>
+                                    <div class="club-badges-row">
+                                        <span class="badge-item font-highlight">Fundado em 1995</span>
+                                        <span class="badge-item">Utilidade Pública Desportiva</span>
+                                    </div>
+                                    
+                                    <!-- Athletic Track Dynamic Line Diagram (Very complex vector element) -->
+                                    <div class="running-track-diagram">
+                                        <svg viewBox="0 0 350 16" fill="none">
+                                            <path d="M0 8 C 80 2, 270 2, 350 8" stroke="var(--theme-accent)" stroke-width="2" stroke-linecap="round"/>
+                                            <path d="M0 13 C 80 8, 270 8, 350 13" stroke="var(--theme-primary)" stroke-dasharray="8,4" stroke-width="1.2"/>
+                                            <circle cx="280" cy="7" r="3" fill="var(--theme-accent)"/>
+                                            <circle cx="295" cy="8.5" r="3" fill="var(--theme-primary)"/>
+                                        </svg>
+                                    </div>
+                                    <p class="club-location">Capital do Vidro e do Atletismo</p>
+                                </div>
+                            </div>
+                            <div class="header-divider-modern"></div>
+                        </header>
+
+                        <!-- Corpo do Ofício -->
+                        <div class="document-content">
+                            <!-- Bloco do Destinatário e Referências -->
+                            <div class="meta-section">
+                                <div class="reference-box">
+                                    <span class="label">Nossa Refª:</span>
+                                    <span class="value" id="preview-ref">[Referência]</span>
+                                </div>
+                                <div class="date-box">
+                                    <span class="value" id="preview-date">Marinha Grande, [Data]</span>
+                                </div>
+                            </div>
+
+                            <!-- Caixa do Destinatário -->
+                            <div class="recipient-window-envelope">
+                                <div class="recipient-card">
+                                    <div class="destinatario-badge">DESTINATÁRIO</div>
+                                    <p class="r-name" id="preview-dest-name">Exmo.(a) Senhor(a)</p>
+                                    <p class="r-address" id="preview-dest-address">Morada Destinatário</p>
+                                    <p class="r-zipcity" id="preview-dest-zipcity">0000-000 Localidade</p>
+                                </div>
+                            </div>
+
+                            <!-- Assunto -->
+                            <div class="subject-line">
+                                <span class="label">ASSUNTO:</span>
+                                <span class="value" id="preview-subject">[Assunto do Documento]</span>
+                            </div>
+
+                            <!-- Carta Conteúdo -->
+                            <article class="letter-body">
+                                <p class="salutation" id="preview-salutation">Exmo.(a) Senhor(a),</p>
+                                
+                                <div class="body-text" id="preview-body">
+                                    <p>Texto principal da carta oficial do Clube Atletismo de Marinha Grande.</p>
+                                </div>
+                                
+                                <p class="valediction" id="preview-valediction">Com os nossos melhores cumprimentos,</p>
+                            </article>
+
+                        </div>
+
+                        <!-- Docex1 style footer (Visible only in style-docex1) -->
+                        <div class="docex1-footer-decor">
+                            <div class="docex1-footer-line"></div>
+                            <div class="docex1-footer-text-row">
+                                <span class="docex1-footer-left-text">Clube Atletismo de Marinha Grande</span>
+                                <span class="docex1-footer-right-text">imprima, personalize, impressione</span>
+                            </div>
+                        </div>
+
+                        <!-- Rodapé Premium Ultra-Moderno sem Ícones -->
+                        <footer class="document-footer">
+                            <div class="footer-divider-thin"></div>
+                            
+                            <!-- Morada -->
+                            <div class="footer-addr-row">
+                                <span id="preview-foot-addr">Estádio Municipal da Marinha Grande (Av. Dr. José Henriques Vareda 118, 2430-307 Marinha Grande)</span>
+                            </div>
+                            
+                            <!-- Contactos Rápidos -->
+                            <div class="footer-details-row">
+                                <div class="detail-item">
+                                    <span class="detail-label">Telefone</span>
+                                    <span id="preview-foot-phone">+351 928 119 160</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Correio Eletrónico</span>
+                                    <span id="preview-foot-email">catletismomg@gmail.com</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Website</span>
+                                    <span id="preview-foot-web">www.catletismomg.pt</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Redes Sociais sem Ícones -->
+                            <div class="footer-social-pill">
+                                <div class="social-text-item">
+                                    <span class="social-label">Instagram:</span>
+                                    <span id="preview-foot-insta">@camg_atletismo</span>
+                                </div>
+                                <div class="social-text-item">
+                                    <span class="social-label">Facebook & YouTube:</span>
+                                    <span id="preview-foot-socials">@catletismomg</span>
+                                </div>
+                            </div>
+                        </footer>
+
+                    </div>
+                </div>
+
+                <!-- ENVELOPE DL PREVIEW -->
+                <div class="preview-container envelope-dl-container" id="envelope-dl-page">
+                    <div class="envelope-dl-shape theme-verde-ouro">
+                        <div class="envelope-face">
+                            
+                            <div class="env-diagonal-stripes"></div>
+
+                            <!-- Sender Information -->
+                            <div class="env-sender-box" id="env-dl-sender-block">
+                                <div class="env-sender-title-row">
+                                    <img src="logo.png" alt="CAMG" class="club-official-logo-mini" onerror="this.src='https://placehold.co/50x50/0f4c3a/ffffff?text=C';">
+                                    <span class="env-sender-name">Clube Atletismo de Marinha Grande</span>
+                                </div>
+                                <p class="env-sender-address" id="preview-env-dl-sender-addr">Estádio Municipal da Marinha Grande, Av. Dr. José Henriques Vareda 118, 2430-307 Marinha Grande</p>
+                            </div>
+
+                            <!-- Stamp Box -->
+                            <div class="env-stamp-box">
+                                <span>PORTE PAGO<br>PORTUGAL</span>
+                            </div>
+
+                            <!-- Recipient Window -->
+                            <div class="env-recipient-area" id="env-dl-recipient-container">
+                                <div class="env-window-border" id="env-dl-window">
+                                    <div class="window-inner-text">
+                                        <p class="env-r-name" id="preview-env-dl-name">Exmo.(a) Senhor(a)</p>
+                                        <p class="env-r-address" id="preview-env-dl-address">Morada Destinatário</p>
+                                        <p class="env-r-zipcity" id="preview-env-dl-zipcity">0000-000 Localidade</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="env-size-tag">DL (220 x 110 mm)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENVELOPE C5 PREVIEW -->
+                <div class="preview-container envelope-c5-container" id="envelope-c5-page">
+                    <div class="envelope-c5-shape theme-verde-ouro">
+                        <div class="envelope-face">
+                            
+                            <div class="env-diagonal-stripes"></div>
+
+                            <!-- Sender Information -->
+                            <div class="env-sender-box" id="env-c5-sender-block">
+                                <div class="env-sender-title-row">
+                                    <img src="logo.png" alt="CAMG" class="club-official-logo-mini" onerror="this.src='https://placehold.co/50x50/0f4c3a/ffffff?text=C';">
+                                    <span class="env-sender-name">Clube Atletismo de Marinha Grande</span>
+                                </div>
+                                <p class="env-sender-address" id="preview-env-c5-sender-addr">Estádio Municipal da Marinha Grande, Av. Dr. José Henriques Vareda 118, 2430-307 Marinha Grande</p>
+                            </div>
+
+                            <!-- Stamp Box -->
+                            <div class="env-stamp-box">
+                                <span>PORTE PAGO<br>PORTUGAL</span>
+                            </div>
+
+                            <!-- Recipient Area -->
+                            <div class="env-recipient-area" id="env-c5-recipient-container">
+                                <div class="env-window-border" id="env-c5-window">
+                                    <div class="window-inner-text">
+                                        <p class="env-r-name" id="preview-env-c5-name">Exmo.(a) Senhor(a)</p>
+                                        <p class="env-r-address" id="preview-env-c5-address">Morada Destinatário</p>
+                                        <p class="env-r-zipcity" id="preview-env-c5-zipcity">0000-000 Localidade</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="env-size-tag">C5 (229 x 162 mm)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- A5 NOTEPAD PREVIEW -->
+                <div class="preview-container paper-notebook" id="notepad-a5-page">
+                    <div class="page-a5 theme-verde-ouro style-docex" id="a5-sheet">
+                        
+                        <!-- Premium Guilloché Background Layer -->
+                        <div class="page-textured-background"></div>
+
+                        <!-- Modern Vanguardist Vertical Accent Line -->
+                        <div class="modern-vertical-accent"></div>
+                        
+                        <!-- Modern Glow Bar and Tech/Geometric Side Decor -->
+                        <div class="modern-header-glow-bar"></div>
+                        <div class="modern-sidebar-decor"></div>
+
+                        <!-- Watermark (Athletic rings & logo) -->
+                        <div class="page-watermark">
+                            <svg viewBox="0 0 500 500" class="track-watermark-svg">
+                                <circle cx="250" cy="250" r="230" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="8,6"/>
+                                <circle cx="250" cy="250" r="190" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="250" cy="250" r="150" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="250" cy="250" r="110" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4,4"/>
+                            </svg>
+                            <img src="logo.png" alt="" class="watermark-logo-img" onerror="this.style.display='none';">
+                        </div>
+
+                        <!-- DocEx Style Track SVG (Visible always on A5 notebook as requested) -->
+                        <div class="docex-track-container">
+                            <svg viewBox="0 0 148 210" class="docex-track-svg">
+                                <!-- Path 1 (Outer Black) -->
+                                <path d="M 125,210 L 125,70 A 20,20 0 0,1 148,50" fill="none" stroke="#000000" stroke-width="0.8"/>
+                                <!-- Path 2 (Outer Yellow) -->
+                                <path d="M 128,210 L 128,70 A 17,17 0 0,1 148,53" fill="none" stroke="#ffd400" stroke-width="1.0"/>
+                                <!-- Path 3 (Inner Yellow) -->
+                                <path d="M 131,210 L 131,70 A 14,14 0 0,1 148,56" fill="none" stroke="#ffd400" stroke-width="1.0"/>
+                                <!-- Path 4 (Inner Black) -->
+                                <path d="M 134,210 L 134,70 A 11,11 0 0,1 148,59" fill="none" stroke="#000000" stroke-width="0.8"/>
+                            </svg>
+                        </div>
+
+                        <!-- Invented Custom Header for Notepad -->
+                        <header class="notepad-custom-header">
+                            <div class="notepad-header-left">
+                                <div class="notepad-brand">
+                                    <div class="notepad-logo-container">
+                                        <img src="logo.png" alt="CAMG" class="notepad-official-logo" onerror="this.style.display='none';">
+                                    </div>
+                                    <div class="notepad-brand-text">
+                                        <span class="brand-title">CAMG</span>
+                                        <span class="brand-subtitle">Atletismo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notepad-header-right">
+                                <h1 class="notepad-page-title" id="preview-notepad-title">Anotações</h1>
+                                <span class="notepad-subtext">Est. 1995</span>
+                            </div>
+                        </header>
+                        <div class="notepad-header-divider"></div>
+
+                        <!-- Optional Date field at the top right of lines -->
+                        <div class="notepad-top-meta" id="preview-notepad-top-meta">
+                            <span class="notepad-date-field">Data: _____ / _____ / _________</span>
+                        </div>
+
+                        <!-- Notepad Writing Lines / Grids -->
+                        <div class="notepad-body-container">
+                            <div class="notepad-margin-line" id="preview-notepad-margin-line"></div>
+                            <div class="notepad-lines-pattern" id="preview-notepad-lines"></div>
+                        </div>
+
+                        <!-- Letter style footer (Oficial docex, Ceremonial, etc.) -->
+                        <footer class="document-footer notepad-letter-footer">
+                            <div class="footer-divider-thin"></div>
+                            <div class="footer-addr-row">
+                                <span id="preview-notepad-foot-addr">Estádio Municipal da Marinha Grande (Av. Dr. José Henriques Vareda 118, 2430-307 Marinha Grande)</span>
+                            </div>
+                            <div class="footer-details-row">
+                                <div class="detail-item"><span class="detail-label">Tel:</span> <span id="preview-notepad-foot-phone">+351 928 119 160</span></div>
+                                <div class="detail-item"><span class="detail-label">Email:</span> <span id="preview-notepad-foot-email">catletismomg@gmail.com</span></div>
+                                <div class="detail-item"><span class="detail-label">Web:</span> <span id="preview-notepad-foot-web">www.catletismomg.pt</span></div>
+                            </div>
+                        </footer>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- SIDEBAR 2: METRICS & UTILITIES PANEL (Right) -->
+        <aside class="sidebar-right" id="metrics-panel">
+            <div class="panel-section">
+                <h3>Métricas de Correspondência</h3>
+                <div class="metric-card">
+                    <span class="metric-label">Contagem de Palavras</span>
+                    <span class="metric-value" id="metric-words">0</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Densidade de Caracteres</span>
+                    <span class="metric-value" id="metric-chars">0 / 2200</span>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="metric-chars-progress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>Estimativa de Envio (CTT)</h3>
+                <div class="estimator-grid">
+                    <div class="est-item">
+                        <span class="est-label">Peso Est. Papel</span>
+                        <span class="est-value" id="ctt-weight">5 g</span>
+                    </div>
+                    <div class="est-item">
+                        <span class="est-label">Escalão CTT</span>
+                        <span class="est-value">Até 20g</span>
+                    </div>
+                </div>
+                <div class="postage-class-card">
+                    <div class="class-title">Correio Normal Nacional</div>
+                    <div class="class-price" id="ctt-price">0,65 €</div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>Validação de Normas CTT</h3>
+                <div class="validation-list">
+                    <div class="val-rule passed" id="rule-margins">
+                        <span class="rule-icon">✓</span>
+                        <span class="rule-text">Margens regulamentares (20mm)</span>
+                    </div>
+                    <div class="val-rule passed" id="rule-sender">
+                        <span class="rule-icon">✓</span>
+                        <span class="rule-text">Remetente visível no envelope</span>
+                    </div>
+                    <div class="val-rule passed" id="rule-zip">
+                        <span class="rule-icon">✓</span>
+                        <span class="rule-text">Formato de Código Postal nacional</span>
+                    </div>
+                    <div class="val-rule passed" id="rule-density">
+                        <span class="rule-icon">✓</span>
+                        <span class="rule-text">Densidade de texto recomendada</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>Ações Adicionais</h3>
+                <button type="button" class="btn btn-secondary btn-block" id="btn-save-json" title="Exportar dados como JSON">
+                    💾 Guardar Ficheiro JSON
+                </button>
+                <button type="button" class="btn btn-secondary btn-block" id="btn-load-json" title="Carregar ficheiro JSON">
+                    📂 Carregar Ficheiro JSON
+                </button>
+                <input type="file" id="input-file-json" style="display: none;" accept=".json">
+            </div>
+        </aside>
+        
+    </div>
+
+    <!-- html2canvas Library to Export as JPG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Script Ficheiro -->
+    <script src="app.js"></script>
+</body>
+</html>
