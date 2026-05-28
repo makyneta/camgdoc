@@ -1572,7 +1572,8 @@ input:checked + .slider:before { transform: translateX(20px); }
 }
 
 .style-docex .docex-track-container,
-.style-ceremonial .docex-track-container {
+.style-ceremonial .docex-track-container,
+.style-modern .docex-track-container {
     display: block;
 }
 
@@ -2299,39 +2300,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 /* Adjust paddings for asymmetric layout */
 .style-modern.page-a4 {
     padding-left: 28mm !important;
-    padding-right: 28mm !important; /* Ensure text never overlaps right-side stripes */
-    position: relative;
-}
-
-/* Parallel straight vertical stripes on the right side of the page (no curve in the header) */
-.style-modern.page-a4::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 12mm;
-    bottom: 0;
-    width: 14px;
-    background: repeating-linear-gradient(
-        90deg,
-        var(--theme-primary) 0px,
-        var(--theme-primary) 2px,
-        transparent 2px,
-        transparent 4px,
-        var(--theme-accent) 4px,
-        var(--theme-accent) 6px,
-        transparent 6px,
-        transparent 8px,
-        var(--theme-accent) 8px,
-        var(--theme-accent) 10px,
-        transparent 10px,
-        transparent 12px,
-        var(--theme-primary) 12px,
-        var(--theme-primary) 14px
-    );
-    z-index: 2;
-    opacity: 0.8;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    padding-right: 35mm !important; /* Ensure text never overlaps the curved track lines */
 }
 
 .style-modern.page-a5 {
@@ -2339,7 +2308,6 @@ input:checked + .slider:before { transform: translateX(20px); }
 }
 
 /* Hide track lines/watermarks/borders/diagrams in modern style on A4 only */
-.style-modern:not(.page-a5) .docex-track-container,
 .style-modern:not(.page-a5) .page-watermark,
 .style-modern .page-double-border,
 .style-modern .running-track-diagram,
@@ -2348,10 +2316,7 @@ input:checked + .slider:before { transform: translateX(20px); }
     display: none !important;
 }
 
-/* Ensure track curves scaling and watermark visibility on A5 notepad in modern mode */
-.page-a5.style-modern .docex-track-container {
-    display: block !important;
-}
+/* Ensure watermark visibility on A5 notepad in modern mode */
 .page-a5.style-modern .page-watermark {
     display: flex !important;
 }
@@ -2779,36 +2744,6 @@ input:checked + .slider:before { transform: translateX(20px); }
     .style-modern.page-a5 .notepad-letter-footer {
         background-color: #ffd400 !important;
         color: #000000 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .style-modern.page-a4::after {
-        content: "" !important;
-        position: absolute !important;
-        top: 0 !important;
-        right: 12mm !important;
-        bottom: 0 !important;
-        width: 14px !important;
-        background: repeating-linear-gradient(
-            90deg,
-            var(--theme-primary) 0px,
-            var(--theme-primary) 2px,
-            transparent 2px,
-            transparent 4px,
-            var(--theme-accent) 4px,
-            var(--theme-accent) 6px,
-            transparent 6px,
-            transparent 8px,
-            var(--theme-accent) 8px,
-            var(--theme-accent) 10px,
-            transparent 10px,
-            transparent 12px,
-            var(--theme-primary) 12px,
-            var(--theme-primary) 14px
-        ) !important;
-        z-index: 2 !important;
-        opacity: 0.8 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
